@@ -1,3 +1,5 @@
+# 回声实验室 Exam
+
 # 使用的AI工具
 
 > Deepseek hardness + deepseek flashv4.1
@@ -21,6 +23,16 @@
 | POST   | /api/v1/links                       | 是   | {"url"}                     |
 | DELETE | /api/v1/links/{id}                  | 是   | 路径参数 id                 |
 | GET    | /r/{code}                           | 否   | 路径参数 code               |
+
+技术栈
+- Gorm、Gin、Viper
+- middleware.auth
+- middleware.cors
+
+开始时，修改config.yaml中的配置，启动main.go即可
+
+功能
+- 占位
 
 # AI 辅助的地方
 - 使用**AI**找出前端所有的**连接约定**

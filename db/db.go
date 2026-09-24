@@ -1,6 +1,9 @@
 package db
 
 import (
+	"errors"
+	"fmt"
+
 	"LinkDesk/config"
 
 	"gorm.io/driver/mysql"
@@ -10,7 +13,11 @@ import (
 var Db *gorm.DB
 
 func Connect() error {
-	dsn := config.Config.Database.User + ":" + config.Config.Database.Password + "@tcp(127.0.0.1:3306)/" + config.Config.Database.Path + "?charset=utf8mb4&parseTime=True&loc=Local"
+	cfg := config.Config.Database
+	// 地址、端口、库名、账号都从配置来,不写死在代码里
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		cfg.User, cfg.Password, cfg.Host, cfg.Port, cfg.Path)
+
 	// TranslateError:把驱动的原生错误(如 MySQL 1062 重复键)翻译成 gorm.ErrDuplicatedKey
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{TranslateError: true})
 	if err != nil {
@@ -26,4 +33,16 @@ func Connect() error {
 	Db = db
 
 	return nil
+}
+
+// Ping 检查数据库连接是否还可用,给 /health 用。
+func Ping() error {
+	if Db == nil {
+		return errors.New("数据库尚未连接")
+	}
+	sqlDB, err := Db.DB()
+	if err != nil {
+		return err
+	}
+	return sqlDB.Ping()
 }

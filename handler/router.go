@@ -5,12 +5,18 @@ import (
 
 	"github.com/gin-gonic/gin"
 
+	"LinkDesk/db"
 	"LinkDesk/middleware"
 )
 
 // RegisterRoutes 注册前端约定的全部路由
 func RegisterRoutes(r *gin.Engine) {
 	r.GET("/health", func(c *gin.Context) {
+		// 数据库不可用时必须报错,不能永远返回成功
+		if err := db.Ping(); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"code": "INTERNAL_ERROR", "message": "数据库不可用"})
+			return
+		}
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
 

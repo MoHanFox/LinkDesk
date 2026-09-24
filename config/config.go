@@ -17,6 +17,8 @@ type cfg struct {
 		Port string
 	}
 	Database struct {
+		Host     string
+		Port     string
 		Path     string
 		User     string
 		Password string
@@ -42,6 +44,8 @@ func LoadConfig() error {
 
 	// 默认值:即使没有 config.yaml,程序也能用这些值正常启动
 	viper.SetDefault("server.port", ":8080")
+	viper.SetDefault("database.host", "127.0.0.1")
+	viper.SetDefault("database.port", "3306")
 	viper.SetDefault("database.path", "linkDesk")
 	viper.SetDefault("database.user", "root")
 	viper.SetDefault("database.password", "123456789")

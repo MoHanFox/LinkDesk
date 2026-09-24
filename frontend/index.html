@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#17352d" />
+    <meta
+      name="description"
+      content="Linkdesk 短链接管理工作台"
+    />
+    <title>Linkdesk | 短链接工作台</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./config.js" defer></script>
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+
+    <div id="app" class="app-shell">
+      <section id="auth-view" class="auth-view" aria-labelledby="auth-title">
+        <div class="auth-rail">
+          <a class="brand brand-on-dark" href="#auth-view" aria-label="Linkdesk 首页">
+            <span class="brand-mark" aria-hidden="true">LD</span>
+            <span>
+              <strong>Linkdesk</strong>
+              <small>SHORT LINK WORKSPACE</small>
+            </span>
+          </a>
+
+          <div class="rail-copy">
+            <p class="eyebrow eyebrow-light">GO BACKEND / FRONTEND LAB</p>
+            <h1>把链接变短，<br />把管理做清楚。</h1>
+            <p>
+              一个专注于接口联调的短链接工作台。登录后，创建、追踪和整理属于你的每一条链接。
+            </p>
+          </div>
+
+          <div class="rail-footer">
+            <span class="status-dot status-dot-light" aria-hidden="true"></span>
+            <span>连接本地 API 服务</span>
+            <span class="rail-version">v1.0</span>
+          </div>
+        </div>
+
+        <div class="auth-panel-wrap">
+          <div class="auth-panel">
+            <div class="auth-heading">
+              <p class="eyebrow">ACCOUNT ACCESS</p>
+              <h2 id="auth-title">进入你的工作台</h2>
+              <p class="auth-subtitle">使用后端接口创建你的第一条短链接。</p>
+            </div>
+
+            <div class="auth-tabs" role="tablist" aria-label="账户操作">
+              <button
+                id="login-tab"
+                class="auth-tab is-active"
+                type="button"
+                role="tab"
+                aria-selected="true"
+                aria-controls="login-form"
+                data-auth-tab="login"
+              >
+                登录
+              </button>
+              <button
+                id="register-tab"
+                class="auth-tab"
+                type="button"
+                role="tab"
+                aria-selected="false"
+                aria-controls="register-form"
+                data-auth-tab="register"
+              >
+                注册
+              </button>
+            </div>
+
+            <form id="login-form" class="auth-form" data-auth-form="login" novalidate>
+              <div class="field-group">
+                <label for="login-username">用户名</label>
+                <input
+                  id="login-username"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  minlength="3"
+                  maxlength="32"
+                  required
+                  placeholder="例如 tom"
+                />
+                <p class="field-error" data-error-for="login-username"></p>
+              </div>
+              <div class="field-group">
+                <label for="login-password">密码</label>
+                <div class="password-wrap">
+                  <input
+                    id="login-password"
+                    name="password"
+                    type="password"
+                    autocomplete="current-password"
+                    minlength="6"
+                    maxlength="72"
+                    required
+                    placeholder="输入你的密码"
+                  />
+                  <button class="password-toggle" type="button" data-password-toggle="login-password">
+                    显示
+                  </button>
+                </div>
+                <p class="field-error" data-error-for="login-password"></p>
+              </div>
+              <button class="button button-primary button-block" type="submit">
+                <span data-submit-label>登录工作台</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+              <p class="form-message" data-form-message="login" role="alert"></p>
+            </form>
+
+            <form id="register-form" class="auth-form" data-auth-form="register" novalidate hidden>
+              <div class="field-group">
+                <label for="register-username">用户名</label>
+                <input
+                  id="register-username"
+                  name="username"
+                  type="text"
+                  autocomplete="username"
+                  minlength="3"
+                  maxlength="32"
+                  required
+                  placeholder="3-32 个字符"
+                />
+                <p class="field-hint">建议使用字母、数字或下划线。</p>
+                <p class="field-error" data-error-for="register-username"></p>
+              </div>
+              <div class="field-group">
+                <label for="register-password">密码</label>
+                <div class="password-wrap">
+                  <input
+                    id="register-password"
+                    name="password"
+                    type="password"
+                    autocomplete="new-password"
+                    minlength="6"
+                    maxlength="72"
+                    required
+                    placeholder="至少 6 个字符"
+                  />
+                  <button class="password-toggle" type="button" data-password-toggle="register-password">
+                    显示
+                  </button>
+                </div>
+                <p class="field-error" data-error-for="register-password"></p>
+              </div>
+              <button class="button button-primary button-block" type="submit">
+                <span data-submit-label>创建账号</span>
+                <span class="button-spinner" aria-hidden="true"></span>
+              </button>
+              <p class="form-message" data-form-message="register" role="alert"></p>
+            </form>
+
+            <p class="auth-footnote">密码通过后端安全哈希保存，前端不会读取或保存密码。</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="dashboard-view" class="dashboard-view" hidden>
+        <aside class="sidebar" aria-label="主导航">
+          <a class="brand brand-on-dark" href="#workspace" aria-label="Linkdesk 工作台">
+            <span class="brand-mark" aria-hidden="true">LD</span>
+            <span>
+              <strong>Linkdesk</strong>
+              <small>SHORT LINK WORKSPACE</small>
+            </span>
+          </a>
+
+          <nav class="side-nav">
+            <a class="side-nav-link is-active" href="#workspace">
+              <span class="nav-index" aria-hidden="true">01</span>
+              <span>我的链接</span>
+            </a>
+          </nav>
+
+          <div class="sidebar-bottom">
+            <div class="api-status-card" aria-live="polite">
+              <span class="status-dot" id="api-status-dot" aria-hidden="true"></span>
+              <div>
+                <span class="api-status-label">API 状态</span>
+                <strong id="api-status-text">检查中</strong>
+              </div>
+            </div>
+            <p class="sidebar-note">每日创建配额由后端配置控制。</p>
+          </div>
+        </aside>
+
+        <main id="main-content" class="main-content" tabindex="-1">
+          <header class="topbar">
+            <div>
+              <p class="topbar-kicker">WORKSPACE / LINKS</p>
+              <p class="topbar-date" id="today-label"></p>
+            </div>
+            <div class="account-menu">
+              <div class="account-avatar" id="user-avatar" aria-hidden="true">T</div>
+              <div class="account-copy">
+                <strong id="user-name">用户</strong>
+                <span>已登录</span>
+              </div>
+              <button class="button button-ghost button-small" id="logout-button" type="button">退出登录</button>
+            </div>
+          </header>
+
+          <div id="workspace" class="content-wrap">
+            <section class="page-intro" aria-labelledby="page-title">
+              <div>
+                <p class="eyebrow">PERSONAL LINK INDEX</p>
+                <h1 id="page-title">我的链接</h1>
+                <p class="page-intro-copy">集中查看你创建的短链接、跳转地址和点击表现。</p>
+              </div>
+              <button class="button button-primary" id="focus-create-button" type="button">
+                <span class="button-symbol" aria-hidden="true">+</span>
+                新建短链接
+              </button>
+            </section>
+
+            <section class="metrics-grid" aria-label="链接概览">
+              <article class="metric-card">
+                <div class="metric-label">我的短链接</div>
+                <strong class="metric-value" id="metric-total">--</strong>
+                <span class="metric-caption">已保存的全部链接</span>
+              </article>
+              <article class="metric-card metric-card-accent">
+                <div class="metric-label">当前页点击</div>
+                <strong class="metric-value" id="metric-clicks">--</strong>
+                <span class="metric-caption">列表中可见链接的累计点击</span>
+              </article>
+              <article class="metric-card metric-card-status">
+                <div class="metric-label">服务连接</div>
+                <strong class="metric-value metric-value-status" id="metric-api">检查中</strong>
+                <span class="metric-caption">来自后端 `/health`</span>
+              </article>
+            </section>
+
+            <section class="workspace-grid" aria-label="创建和管理短链接">
+              <article class="surface-card create-card" id="create-panel">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow">CREATE</p>
+                    <h2>创建一条新链接</h2>
+                  </div>
+                  <span class="section-number" aria-hidden="true">01</span>
+                </div>
+                <form id="create-link-form" class="create-form" novalidate>
+                  <div class="field-group">
+                    <label for="original-url">原始 URL <span class="required-mark">*</span></label>
+                    <input
+                      id="original-url"
+                      name="url"
+                      type="url"
+                      inputmode="url"
+                      autocomplete="url"
+                      required
+                      placeholder="https://example.com/your-long-link"
+                    />
+                    <p class="field-hint">只支持 http:// 和 https:// 地址。</p>
+                    <p class="field-error" data-error-for="original-url"></p>
+                  </div>
+                  <button class="button button-dark button-block" type="submit">
+                    <span data-submit-label>生成短链接</span>
+                    <span class="button-spinner" aria-hidden="true"></span>
+                  </button>
+                  <p class="form-message" data-form-message="create" role="alert"></p>
+                </form>
+              </article>
+
+              <aside class="surface-card guide-card">
+                <div class="section-heading">
+                  <div>
+                    <p class="eyebrow">FLOW</p>
+                    <h2>工作状态</h2>
+                  </div>
+                  <span class="section-number" aria-hidden="true">02</span>
+                </div>
+                <ol class="flow-list">
+                  <li class="flow-item is-current">
+                    <span class="flow-marker">1</span>
+                    <div><strong>提交原始地址</strong><span>后端校验 URL 并生成唯一短码</span></div>
+                  </li>
+                  <li class="flow-item">
+                    <span class="flow-marker">2</span>
+                    <div><strong>复制或打开短链</strong><span>访问短码会返回 302 跳转</span></div>
+                  </li>
+                  <li class="flow-item">
+                    <span class="flow-marker">3</span>
+                    <div><strong>观察点击数据</strong><span>每次成功访问都会增加点击数</span></div>
+                  </li>
+                </ol>
+              </aside>
+            </section>
+
+            <section class="links-section" aria-labelledby="links-title">
+              <div class="section-heading links-heading">
+                <div>
+                  <p class="eyebrow">LINK INDEX</p>
+                  <h2 id="links-title">已创建的短链接</h2>
+                </div>
+                <div class="list-tools">
+                  <label class="search-wrap" for="link-search">
+                    <span class="search-symbol" aria-hidden="true">/</span>
+                    <span class="sr-only">搜索短链接</span>
+                    <input id="link-search" type="search" placeholder="搜索 URL 或短码" />
+                  </label>
+                  <button class="button button-outline button-small" id="refresh-button" type="button">刷新列表</button>
+                </div>
+              </div>
+
+              <div id="links-loading" class="state-panel" hidden>
+                <div class="loading-bar loading-bar-wide"></div>
+                <div class="loading-bar loading-bar-medium"></div>
+                <div class="loading-bar loading-bar-short"></div>
+                <span>正在读取链接列表...</span>
+              </div>
+
+              <div id="links-empty" class="state-panel empty-panel" hidden>
+                <span class="empty-mark" aria-hidden="true">--</span>
+                <h3 id="empty-title">还没有短链接</h3>
+                <p id="empty-copy">从上方创建第一条链接，它会出现在这里。</p>
+                <button class="button button-outline" id="empty-create-button" type="button">创建第一条</button>
+              </div>
+
+              <div id="links-table-wrap" class="table-wrap" hidden>
+                <table class="links-table">
+                  <caption class="sr-only">我的短链接列表</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">原始地址</th>
+                      <th scope="col">短码</th>
+                      <th scope="col">点击</th>
+                      <th scope="col">创建时间</th>
+                      <th scope="col"><span class="sr-only">操作</span></th>
+                    </tr>
+                  </thead>
+                  <tbody id="links-body"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <footer class="page-footer">
+              <span>Linkdesk API contract v1.0</span>
+              <span id="footer-api-base"></span>
+            </footer>
+          </div>
+        </main>
+      </section>
+    </div>
+
+    <dialog id="delete-dialog" class="confirm-dialog" aria-labelledby="delete-dialog-title">
+      <div class="dialog-kicker">DELETE LINK</div>
+      <h2 id="delete-dialog-title">删除这条短链接？</h2>
+      <p>删除后，原短码将无法继续跳转，已经产生的点击数据也会一并移除。</p>
+      <div class="dialog-actions">
+        <button class="button button-ghost" id="cancel-delete-button" type="button">取消</button>
+        <button class="button button-danger" id="confirm-delete-button" type="button">
+          <span data-submit-label>确认删除</span>
+          <span class="button-spinner" aria-hidden="true"></span>
+        </button>
+      </div>
+    </dialog>
+
+    <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>

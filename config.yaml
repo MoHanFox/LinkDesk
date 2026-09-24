@@ -1,0 +1,26 @@
+# 服务相关配置
+server:
+  port: ":8080"      # 监听的端口
+
+# 数据库相关配置
+database:
+  path: "linkdesk"   # MySQL 数据库文件名 - Example
+  user: "root"  #Example
+  password: "123456789" #Example
+
+# CORS 相关配置:允许访问后端的前端地址
+cors_origins:
+  - "http://localhost:63342"   # IDE 内置服务器的默认地址
+  - "http://127.0.0.1:63342"
+
+# 登录 token 的有效期
+token_ttl: "24h"
+
+# 每个用户每天最多创建多少条短链接
+daily_link_quota: 5
+
+# 生成短链接时使用的公开地址(短链就是 它 + /r/ + 短码)
+public_base_url: "http://localhost:8080"
+
+# 每日配额按哪个时区计算当天的边界
+timezone: "Asia/Shanghai"

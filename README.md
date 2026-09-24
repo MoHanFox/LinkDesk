@@ -13,18 +13,16 @@
 
 ---
 
-# 技术栈与选型理由
+# 技术栈
 
-| 用途 | 选型 | 为什么选它 |
-|---|---|---|
-| 语言 | Go 1.26 | 考核要求;标准库自带 `crypto/rand`、`net/http`,写 HTTP 服务不需要额外依赖 |
-| Web 框架 | Gin v1.12 | 教程指定;路由分组能直接把鉴权挂在一组接口上,不用逐个 handler 写 |
-| ORM | GORM v1.31 | 教程指定;`AutoMigrate` 自动建表,省掉手写 DDL;`TranslateError` 能把 MySQL 的重复键错误翻译成 `gorm.ErrDuplicatedKey`,注册接口靠它返回 409 |
-| 数据库 | MySQL 26.7 | 持久化要求;唯一索引能直接保证用户名、短码、token 不重复 |
-| 配置 | Viper | 一个 `config.yaml` 管住端口、数据库、配额、CORS、密钥有效期,不用改代码 |
-| 密码哈希 | `golang.org/x/crypto/bcrypt` | 需求明确要求,且 bcrypt 自带 salt,同一个密码每次哈希结果都不同 |
-| 登录凭证 | 随机 token + 会话表 | 需求允许 JWT 或随机 token 二选一。选随机 token 是因为它**能吊销**——删掉会话记录就立刻失效,而 JWT 签发后只能等到过期 |
-| 字体/配色 | OPPO Sans 3 + 蓝色主题 | 前端界面风格取自 HaloForum |
+| 用途 | 选型 |
+|---|---|
+| 语言 | Go 1.26 | 
+| Web 框架 | Gin v1.12 | 
+| ORM | GORM v1.31 | 
+| 数据库 | MySQL 26.7 | 
+| 配置 | Viper |
+| 登录凭证 | 随机 token + 会话表 |
 
 ---
 

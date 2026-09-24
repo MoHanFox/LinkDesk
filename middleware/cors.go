@@ -3,14 +3,31 @@ package middleware
 import (
 	"net/http"
 	"strings"
+	"time"
 
 	"LinkDesk/config"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-// CORS 按配置里的 cors_origins 放行前端跨域请求,并直接答复 OPTIONS 预检。
-func CORS() gin.HandlerFunc {
+func GinCORSMiddleware() gin.HandlerFunc {
+	c := cors.Config{
+		AllowOrigins:     config.Config.CorsOrigins,
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization", "X-Requested-With"},
+		ExposeHeaders:    []string{"Content-Length", "X-Total-Count"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}
+	return cors.New(c)
+}
+
+// Gin有自己的模块，如果需要自定义Cors，可位于main.go使用:
+// r.Use(middleware.CORS())
+
+// CustomCORS 用于定制CORS
+func CustomCORS() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 

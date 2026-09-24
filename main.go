@@ -23,7 +23,7 @@ func main() {
 	}
 
 	r := gin.Default()
-	r.Use(middleware.CORS())
+	r.Use(middleware.GinCORSMiddleware())
 	handler.RegisterRoutes(r)
 
 	r.Run(config.Config.Server.Port)

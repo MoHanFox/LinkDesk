@@ -7,8 +7,8 @@ database:
   host: "127.0.0.1"  # 数据库地址
   port: "3306"       # 数据库端口
   path: "linkdesk"   # MySQL 数据库文件名 - Example
-  user: "root"  #Example
-  password: "123456789" #Example
+  user: "*"  #Example
+  password: "*" #Example
 
 # CORS 相关配置:允许访问后端的前端地址
 cors_origins:

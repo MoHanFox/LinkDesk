@@ -47,8 +47,8 @@ func LoadConfig() error {
 	viper.SetDefault("database.host", "127.0.0.1")
 	viper.SetDefault("database.port", "3306")
 	viper.SetDefault("database.path", "linkDesk")
-	viper.SetDefault("database.user", "root")
-	viper.SetDefault("database.password", "123456789")
+	viper.SetDefault("database.user", "*")
+	viper.SetDefault("database.password", "*")
 	// 默认不允许任何跨域来源,必须显式配置才放行
 	viper.SetDefault("cors_origins", []string{})
 	viper.SetDefault("token_ttl", "24h")
